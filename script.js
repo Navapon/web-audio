@@ -91,8 +91,7 @@ function processRecording() {
           data
         )
           .then(response => {
-          const result = response.data.results[0].alternatives[0];
-          console.log(result)
+          console.log(response)
         })
       };
     });

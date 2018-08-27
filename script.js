@@ -83,15 +83,9 @@ function processRecording() {
         const base64Data = baseData.replace("data:audio/wav;base64,", "");
         data.audio.content = base64Data;
         //axios.post( serverUrl, data ) 
-        axios
-        .post(
-          `https://speech.googleapis.com/v1/speech:recognize?key=${
-            apiKey
-          }`,
-          data
-        )
-          .then(response => {
-          console.log(result)
+        axios.post(`https://speech.googleapis.com/v1/speech:recognize?key=${apiKey}`, data)
+        .then(response => {
+          console.log(response)
         })
       };
     });

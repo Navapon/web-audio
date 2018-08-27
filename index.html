@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Voice Controlled App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shoelace-css/1.0.0-beta16/shoelace.css">
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+    <body>
+        <div class="container">
+
+            <h1>Voice Controlled App</h1>
+
+            <h3 class="no-browser-support">Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In Google Chrome.</h3>
+
+            <div class="app"> 
+                <div class="input-single">
+                    <textarea id="note-textarea" placeholder="Create a new by typing or using voice recognition." rows="6" readonly></textarea>
+                </div>         
+                <button id="start-record-btn"  title="Start Recording">Start Recognition</button>
+                <button id="stop-record-btn"  title="Stop Recording">Stop Recognition</button>
+                <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
+                <img src="https://cdn.dribbble.com/users/2058104/screenshots/4257296/voice_loaderrr.gif" id="listening" alt="" style="display:none">
+            </div>
+
+        </div>
+
+       
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="dist/recorder.js"></script>
+        <script src="script.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript">
+
+            var voice = VoiceSearch.create();
+
+            $(function(){
+                voice.getPermission();
+            });
+
+            $("#start-record-btn").click(function(){
+                $('#listening').show()
+                voice.startRecording();
+            });
+
+            $("#stop-record-btn").click(function(){
+                $('#listening').hide()
+                voice.stopRecording();
+                var data = voice.processRecording();
+                console.log(`data is ${data}`)
+            });
+
+            
+            
+        </script>
+    </body>
+</html>
+
+

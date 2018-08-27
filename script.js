@@ -5,7 +5,7 @@ var audio_context = "";
 var apiKey = "AIzaSyBb3gw82hDkzjZZGRkVz9Tw_MZnycJnekw"
 var data = {
   audio: {
-    content: null,
+    content: null
   },
   config: {
     encoding: "LINEAR16",
@@ -91,7 +91,7 @@ function processRecording() {
           data
         )
           .then(response => {
-          console.log(response)
+          console.log(result)
         })
       };
     });

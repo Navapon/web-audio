@@ -19,17 +19,17 @@
 
             <div class="app"> 
                 <div class="input-single">
-                    <textarea id="note-textarea" placeholder="Create a new by typing or using voice recognition." rows="6" readonly></textarea>
+                    <textarea id="note-textarea" placeholder="Create a new by typing or using web audio api" rows="4" readonly></textarea>
                 </div>         
                 <button id="start-record-btn"  title="Start Recording">Start Recognition</button>
                 <button id="stop-record-btn"  title="Stop Recording">Stop Recognition</button>
                 <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
+                <ul id="recordingslist"></ul>
                 <img src="https://cdn.dribbble.com/users/2058104/screenshots/4257296/voice_loaderrr.gif" id="listening" alt="" style="display:none">
+                <input type="text">
             </div>
 
         </div>
-
-       
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="dist/recorder.js"></script>
@@ -39,24 +39,49 @@
 
             var voice = VoiceSearch.create();
 
+            // when document ready request microphone permission
             $(function(){
                 voice.getPermission();
+                
             });
 
+            // button start record has been click show voice start to recording
             $("#start-record-btn").click(function(){
                 $('#listening').show()
                 voice.startRecording();
+                // var synth = window.speechSynthesis;
+
+                // var inputTxt = document.querySelector('input');
+
+                // var voices = synth.getVoices();
+
+                //     event.preventDefault();
+
+                //     var utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+                //     // var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+                //     for(i = 0; i < voices.length ; i++) {
+                //         if(voices[i].name === "en") {
+                //         utterThis.voice = voices[i]
+                //         }
+                //     }
+
+                //     synth.speak(utterThis);
+
+                //     utterThis.onend = function(event) {
+                //         console.log('Utterance has finished being spoken after ' + event.elapsedTime + ' milliseconds.');
+                //     }
+
+                //     inputTxt.blur();
             });
 
+            // button stop record has been click stop recording & process for send to speech to text api
             $("#stop-record-btn").click(function(){
                 $('#listening').hide()
-                voice.stopRecording();
-                var data = voice.processRecording();
-                console.log(`data is ${data}`)
-            });
-
-            
-            
+                // stopAndProcessRecording will process file wav & encode to base64 & send to api
+                voice.stopAndProcessRecording().then(function(response) {
+                    $('#note-textarea').val(response.result)
+                })
+            });          
         </script>
     </body>
 </html>
